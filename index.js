@@ -148,6 +148,28 @@ function replicate(times, num){
     
 }
 
-console.log(replicate(3, 5)) // [5, 5, 5]
-console.log(replicate(1, 69)) // [69]
-console.log(replicate(-2, 6)) // []
+// console.log(replicate(3, 5)) // [5, 5, 5]
+// console.log(replicate(1, 69)) // [69]
+// console.log(replicate(-2, 6)) // []
+
+
+function fibs(n){
+
+    let result = [0, 1];
+    if (n == 1){
+        return [0];
+    }else if (n == 2){
+        return [0, 1];
+    }
+    
+    //we start at two cause we have the first entries already
+    for (let i = 2; i < n; i++){
+        result.push(result[result.length -1] + result[result.length -2]);
+    }
+
+    return result;
+
+}
+
+console.log(fibs(8));
+
