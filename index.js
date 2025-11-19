@@ -61,5 +61,39 @@ function productOfArray(arr){
 
 }
 
+function contains(obj, value){
 
-console.log(productOfArray([2, 0]));
+    
+
+    for (key in obj){
+
+        if (typeof(obj[key]) == "object"){
+            return contains(obj[key], value);
+        } else {
+            if (obj[key] == value){
+                return true;
+            }
+        }
+
+    }
+
+    return false;
+
+
+}
+
+
+let testObject = {
+
+    data: {
+        info: {
+            stuff: {
+                thing: {
+                   randomNumber: 14 
+                }
+            }
+        }
+    }
+}
+
+console.log(contains(testObject, 14));
