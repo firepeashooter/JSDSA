@@ -171,5 +171,24 @@ function fibs(n){
 
 }
 
-console.log(fibs(8));
+function fibsRecurs(n){
 
+    result = [];
+
+    if (n == 1){
+        return [0];
+    }else if (n == 2){
+        return [0, 1];
+    }
+
+    //this returns the previous list
+    let seq = fibsRecurs(n-1);
+
+    seq.push(seq[seq.length - 1] + seq[seq.length - 2]);
+
+    return seq;
+
+
+}
+
+console.log(fibsRecurs(8));
