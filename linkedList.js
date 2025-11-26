@@ -2,11 +2,11 @@
 class Node {
 	constructor(value = null) {
 		this.value = value;
-		this.nextNode = null;
+		this.next = null;
 	}
 }
 
-class LinkedList {
+export class LinkedList {
 	constructor() {
 		this.head = null;
 		this.tail = this.head;
@@ -63,11 +63,123 @@ class LinkedList {
 		}
 	}
 
-	printL() {
+	pop(){
 
 		let n = this.head;
+
 		while (n) {
-			console.log(n.value);
+			if (n.next == this.tail){
+				let temp = n.next;
+				n.next = null;
+				this.tail = n;
+				return temp;
+			}
+
+			n = n.next;
+		}
+	}
+
+	contains(value){
+
+		let n = this.head;
+
+		while (n) {
+			if (n.value == value){
+				return true;
+			}
+			n = n.next;
+		}
+
+		return false;
+
+	}
+
+	find(value){
+
+			let n = this.head;
+			let index = 0;
+
+			while (n) {
+				if (n.value == value){
+					return index;
+				}
+				index += 1;
+				n = n.next;
+			}
+
+			return null;
+
+	}
+
+	toString(){
+		let formattedString = "";
+
+		let n = this.head;
+
+		while (n) {
+
+			formattedString += "( ";
+			formattedString += n.value;
+			formattedString += " ) -> "; 
+
+			n = n.next;
+		}
+
+		formattedString += " null";
+
+		return formattedString;
+	}
+
+	insertAt(value, index){
+
+		let newNode = new Node(value);
+		let curIndex = 0;
+		let n = this.head;
+
+		while (n){
+
+			if (index == 0){
+				this.prepend(value);
+				return;
+			}
+
+			if (index == this.size - 1){
+				this.append(value);
+				return;
+			}
+
+			if (curIndex == index - 1){
+
+				let tempLink = n.next;
+				n.next = newNode;
+				newNode.next = tempLink;
+				this.size += 1;
+			}
+
+			curIndex += 1;
+			n = n.next;
+		}
+	}
+
+	removeAt(index){
+
+		let curIndex = 0;
+		let n = this.head;
+
+		while (n) {
+
+			if (index == 0){
+				this.head = n.next;
+				return;
+			}
+
+			if (curIndex == index - 1){
+
+				n.next = n.next.next;
+				this.size -= 1;
+			}
+
+			curIndex += 1;
 			n = n.next;
 		}
 	}
@@ -76,20 +188,4 @@ class LinkedList {
 
 
 
-
-const myLinkedList = new LinkedList();
-
-myLinkedList.append(3);
-myLinkedList.append(2);
-myLinkedList.append(6);
-
-myLinkedList.prepend(4);
-myLinkedList.prepend(1);
-
-console.log(`Head: ${myLinkedList.heads().value}`);
-console.log(`Tail: ${myLinkedList.tails().value}`);
-console.log(`Size: ${myLinkedList.sizes()}`);
-console.log(`Index of 3: ${myLinkedList.at(3).value}`);
-
-myLinkedList.printL();
 

@@ -191,4 +191,60 @@ function fibsRecurs(n){
 
 }
 
-console.log(fibsRecurs(8));
+
+
+function merge(arr1, arr2){
+
+    let sortedArray = [];
+
+    let p1 = 0;
+    let p2 = 0;
+
+    while(p1 < arr1.length && p2 < arr2.length){
+
+        if (arr1[p1] < arr2[p2]){
+            sortedArray.push(arr1[p1]);
+            p1 += 1;
+
+        }else{
+            sortedArray.push(arr2[p2]);
+            p2 += 1;
+
+        }
+    }
+
+    if (p1 < arr1.length){
+        sortedArray.push(...arr1.slice(p1));
+    }else if(p2 < arr2.length){
+        sortedArray.push(...arr2.slice(p2));
+    }
+
+
+    return sortedArray;
+
+}
+
+
+function mergeSort(arr){
+
+    if (arr.length <= 1){
+        return arr;
+    }else{
+
+        let mid = Math.floor(arr.length / 2);
+
+        let left = arr.slice(0, mid);
+        let right = arr.slice(mid);
+
+        let sortedLeft = mergeSort(left);
+        let sortedRight = mergeSort(right);
+        return merge(sortedLeft, sortedRight);
+
+        
+
+    }
+
+}
+
+
+console.log(mergeSort([105, 79, 100, 110]));
