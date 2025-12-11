@@ -40,25 +40,36 @@ class BinarySearchTree {
 
 	insert(value) {
 
-		this.recursiveInsert(this.root, value);
+		function recursiveInsert(root, value) {
+
+			if (root === null) {
+				return new TreeNode(value);
+			}
+
+			if (value < root.value) {
+				root.left = recursiveInsert(root.left, value);
+			} else if (value > root.value) {
+				root.right = recursiveInsert(root.right, value);
+			}
+
+			return root;
+		}
+
+		recursiveInsert(this.root, value);
 
 	}
 
-	recursiveInsert(root, value) {
+	delete(value) {
+		function getSuccessor(root) {
 
-		if (root === null) {
-			return new TreeNode(value);
 		}
 
-		if (value < root.value) {
-			root.left = this.recursiveInsert(root.left, value);
-		} else if (value > root.value) {
-			root.right = this.recursiveInsert(root.right, value);
+		function recursiveDelete(root, value) {
+
+
 		}
 
-		return root;
-
-
+		recursiveDelete(this.root, value);
 	}
 
 	prettyPrint(node, prefix = '', isLeft = true) {
