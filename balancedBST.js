@@ -38,6 +38,29 @@ class BinarySearchTree {
 		return root;
 	}
 
+	insert(value) {
+
+		this.recursiveInsert(this.root, value);
+
+	}
+
+	recursiveInsert(root, value) {
+
+		if (root === null) {
+			return new TreeNode(value);
+		}
+
+		if (value < root.value) {
+			root.left = this.recursiveInsert(root.left, value);
+		} else if (value > root.value) {
+			root.right = this.recursiveInsert(root.right, value);
+		}
+
+		return root;
+
+
+	}
+
 	prettyPrint(node, prefix = '', isLeft = true) {
 		if (node === null) {
 			return;
@@ -53,12 +76,14 @@ class BinarySearchTree {
 }
 
 
-let arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+let arr = [1, 2, 3, 4, 5];
 let BST = new BinarySearchTree(arr);
-console.log(BST.root);
 BST.prettyPrint(BST.root);
-console.log(arr);
 
+BST.insert(7);
+BST.insert(4);
+
+BST.prettyPrint(BST.root);
 
 
 
