@@ -96,6 +96,34 @@ class BinarySearchTree {
 		return recursiveFind(this.root, value);
 	}
 
+	levelOrderForEach(callback) {
+
+		let queue = [];
+
+		queue.push(this.root);
+
+		while (queue.length != 0) {
+
+			//Dequeue element
+			let curNode = queue[0];
+			queue.shift();
+
+			//Enqueue the children
+			if (curNode.left) {
+				queue.push(curNode.left);
+			}
+
+			if (curNode.right) {
+				queue.push(curNode.right);
+			}
+
+			//do something with curNode
+			callback(curNode);
+
+
+		}
+	}
+
 	prettyPrint(node, prefix = '', isLeft = true) {
 		if (node === null) {
 			return;
@@ -120,10 +148,12 @@ BST.insert(4);
 
 BST.prettyPrint(BST.root);
 
-console.log("Finding 5: ");
-console.log(BST.find(5));
-console.log("Finding 6: ");
-console.log(BST.find(6));
+//console.log("Finding 5: ");
+//console.log(BST.find(5));
+//console.log("Finding 6: ");
+//console.log(BST.find(6));
+
+BST.levelOrderForEach((elem) => { console.log(elem) })
 
 
 
