@@ -72,6 +72,30 @@ class BinarySearchTree {
 		recursiveDelete(this.root, value);
 	}
 
+
+
+	//Attempts to locate a node in a BST if found return the node else return null
+	find(value) {
+
+		function recursiveFind(root, value) {
+
+			if (!root) {
+				return null;
+			}
+
+			if (root.value == value) {
+				return root;
+			} else if (root.value < value) {
+				return recursiveFind(root.right, value);
+			} else {
+				return recursiveFind(root.left, value);
+			}
+
+		};
+
+		return recursiveFind(this.root, value);
+	}
+
 	prettyPrint(node, prefix = '', isLeft = true) {
 		if (node === null) {
 			return;
@@ -95,6 +119,13 @@ BST.insert(7);
 BST.insert(4);
 
 BST.prettyPrint(BST.root);
+
+console.log("Finding 5: ");
+console.log(BST.find(5));
+console.log("Finding 6: ");
+console.log(BST.find(6));
+
+
 
 
 
