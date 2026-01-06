@@ -98,6 +98,10 @@ class BinarySearchTree {
 
 	levelOrderForEach(callback) {
 
+		if (typeof callback !== 'function') {
+			throw new Error("Callback function is required");
+		}
+
 		let queue = [];
 
 		queue.push(this.root);
@@ -123,6 +127,8 @@ class BinarySearchTree {
 
 		}
 	}
+
+	inOrderForEach
 
 	prettyPrint(node, prefix = '', isLeft = true) {
 		if (node === null) {
@@ -153,7 +159,7 @@ BST.prettyPrint(BST.root);
 //console.log("Finding 6: ");
 //console.log(BST.find(6));
 
-BST.levelOrderForEach((elem) => { console.log(elem) })
+BST.levelOrderForEach(6);
 
 
 
