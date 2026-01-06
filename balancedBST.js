@@ -128,7 +128,68 @@ class BinarySearchTree {
 		}
 	}
 
-	inOrderForEach
+	inOrderForEach(callback) {
+
+		function recursiveInOrderForEach(root, callback) {
+
+			if (!root) {
+				return;
+			}
+
+			recursiveInOrderForEach(root.left, callback);
+			callback(root);
+			recursiveInOrderForEach(root.right, callback);
+
+		}
+
+		if (typeof callback !== 'function') {
+			throw new Error("Callback function is required");
+		}
+
+		recursiveInOrderForEach(this.root, callback);
+	}
+
+	postOrderForEach(callback) {
+
+		function recursivePostOrderForEach(root, callback) {
+
+			if (!root) {
+				return;
+			}
+
+			recursivePostOrderForEach(root.left, callback);
+			recursivePostOrderForEach(root.right, callback);
+			callback(root);
+
+		}
+
+		if (typeof callback !== 'function') {
+			throw new Error("Callback function is required");
+		}
+
+		recursivePostOrderForEach(this.root, callback);
+	}
+
+	preOrderForEach(callback) {
+
+		function recursivePreOrderForEach(root, callback) {
+
+			if (!root) {
+				return;
+			}
+
+			callback(root);
+			recursivePreOrderForEach(root.left, callback);
+			recursivePreOrderForEach(root.right, callback);
+
+		}
+
+		if (typeof callback !== 'function') {
+			throw new Error("Callback function is required");
+		}
+
+		recursivePreOrderForEach(this.root, callback);
+	}
 
 	prettyPrint(node, prefix = '', isLeft = true) {
 		if (node === null) {
@@ -159,7 +220,7 @@ BST.prettyPrint(BST.root);
 //console.log("Finding 6: ");
 //console.log(BST.find(6));
 
-BST.levelOrderForEach(6);
+BST.preOrderForEach((node) => { console.log(node) });
 
 
 
