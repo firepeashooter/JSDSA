@@ -9,7 +9,7 @@ class TreeNode {
 	}
 }
 
-class BinarySearchTree {
+export class BinarySearchTree {
 
 	constructor(arr) {
 
@@ -243,7 +243,7 @@ class BinarySearchTree {
 		}
 
 		//find the node we want to find the hieght of
-		let root = BST.root;
+		let root = this.root;
 		while (root) {
 			if (value > root.value) {
 				root = root.right;
@@ -275,7 +275,47 @@ class BinarySearchTree {
 			}
 		}
 
-		return recursiveDepth(BST.root, value, 0);
+		return recursiveDepth(this.root, value, 0);
+	}
+
+	isBalanced() {
+		//is every nodes subtrees balanced?
+		function checkHeight(root) {
+
+			if (root == null) {
+				return 0;
+			}
+
+			const leftHeight = checkHeight(root.left);
+			if (leftHeight === -1) return -1;
+
+			const rightHeight = checkHeight(root.right);
+			if (rightHeight === -1) return -1;
+
+			if (Math.abs(leftHeight - rightHeight) > 1) {
+				return -1;
+			}
+
+			return Math.max(leftHeight, rightHeight) + 1;
+		}
+
+		return checkHeight(this.root) !== -1;
+	}
+
+	reBalance() {
+
+		let sortedArray = [];
+
+		BST.inOrderForEach((node) => {
+			sortedArray.push(node.value);
+		});
+
+
+		this.root = this.buildBST(sortedArray, 0, sortedArray.length - 1);
+
+		console.log("Tree has been Rebalanced");
+
+
 	}
 
 	prettyPrint(node, prefix = '', isLeft = true) {
@@ -291,22 +331,6 @@ class BinarySearchTree {
 		}
 	}
 }
-
-
-let arr = [1, 2, 3, 4, 5];
-let BST = new BinarySearchTree(arr);
-
-BST.insert(7);
-BST.insert(4);
-
-BST.prettyPrint(BST.root);
-
-//console.log("Finding 5: ");
-//console.log(BST.find(5));
-//console.log("Finding 6: ");
-//console.log(BST.find(6));
-//
-console.log(BST.height(8));
 
 
 
