@@ -62,9 +62,44 @@ class BinarySearchTree {
 	delete(value) {
 		function getSuccessor(root) {
 
+			//start in the right subtree and find the smallest node
+			let curNode = root.right;
+
+			while (curNode.left !== null) {
+				curNode = curNode.left;
+			}
+			return curNode;
 		}
 
 		function recursiveDelete(root, value) {
+
+			//Traverse the Tree to Find the value
+			if (root === null) {
+				return root;
+			}
+
+			if (value > root.value) {
+				root.right = recursiveDelete(root.right, value);
+			} else if (value < root.value) {
+				root.left = recursiveDelete(root.left, value);
+			} else {
+				//Delete the node
+				//with one or zero children
+				if (root.left === null) {
+					return root.right;
+				}
+				if (root.right === null) {
+					return root.left;
+				}
+
+				//with two children
+				const successor = getSuccessor(root);
+				root.value = successor.value;
+				root.right = recursiveDelete(root.right, successor);
+
+
+			}
+			return root;
 
 
 		}
@@ -208,7 +243,6 @@ class BinarySearchTree {
 
 let arr = [1, 2, 3, 4, 5];
 let BST = new BinarySearchTree(arr);
-BST.prettyPrint(BST.root);
 
 BST.insert(7);
 BST.insert(4);
@@ -220,7 +254,10 @@ BST.prettyPrint(BST.root);
 //console.log("Finding 6: ");
 //console.log(BST.find(6));
 
-BST.preOrderForEach((node) => { console.log(node) });
+BST.delete(3);
+
+BST.prettyPrint(BST.root);
+
 
 
 
