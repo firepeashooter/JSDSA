@@ -226,6 +226,58 @@ class BinarySearchTree {
 		recursivePreOrderForEach(this.root, callback);
 	}
 
+	height(value) {
+
+		function recursiveHeight(root) {
+
+			if (root === null) {
+				return null;
+			}
+
+			//if the node is a leaf node it has a hieght of 0
+			if (root.left === null && root.right === null) {
+				return 0;
+			} else {
+				return 1 + Math.max(recursiveHeight(root.left), recursiveHeight(root.right));
+			}
+		}
+
+		//find the node we want to find the hieght of
+		let root = BST.root;
+		while (root) {
+			if (value > root.value) {
+				root = root.right;
+			} else if (value < root.value) {
+				root = root.left;
+			} else if (value === root.value) {
+				console.log(root);
+				return recursiveHeight(root);
+			}
+		}
+		return null;
+
+	}
+
+	depth(value) {
+
+		function recursiveDepth(root, value, depth) {
+
+			if (root === null) {
+				return null;
+			}
+
+			if (value > root.value) {
+				return recursiveDepth(root.right, value, depth + 1);
+			} else if (value < root.value) {
+				return recursiveDepth(root.left, value, depth + 1);
+			} else if (value == root.value) {
+				return depth;
+			}
+		}
+
+		return recursiveDepth(BST.root, value, 0);
+	}
+
 	prettyPrint(node, prefix = '', isLeft = true) {
 		if (node === null) {
 			return;
@@ -253,10 +305,8 @@ BST.prettyPrint(BST.root);
 //console.log(BST.find(5));
 //console.log("Finding 6: ");
 //console.log(BST.find(6));
-
-BST.delete(3);
-
-BST.prettyPrint(BST.root);
+//
+console.log(BST.height(8));
 
 
 
