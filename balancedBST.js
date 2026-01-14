@@ -5,7 +5,6 @@ class TreeNode {
 		this.value = value;
 		this.left = left;
 		this.right = right;
-
 	}
 }
 
@@ -97,17 +96,13 @@ export class BinarySearchTree {
 				root.value = successor.value;
 				root.right = recursiveDelete(root.right, successor);
 
-
 			}
 			return root;
-
 
 		}
 
 		recursiveDelete(this.root, value);
 	}
-
-
 
 	//Attempts to locate a node in a BST if found return the node else return null
 	find(value) {
@@ -130,6 +125,7 @@ export class BinarySearchTree {
 
 		return recursiveFind(this.root, value);
 	}
+
 
 	levelOrderForEach(callback) {
 
@@ -155,13 +151,11 @@ export class BinarySearchTree {
 			if (curNode.right) {
 				queue.push(curNode.right);
 			}
-
 			//do something with curNode
 			callback(curNode);
-
-
 		}
 	}
+
 
 	inOrderForEach(callback) {
 
@@ -184,6 +178,7 @@ export class BinarySearchTree {
 		recursiveInOrderForEach(this.root, callback);
 	}
 
+
 	postOrderForEach(callback) {
 
 		function recursivePostOrderForEach(root, callback) {
@@ -205,6 +200,7 @@ export class BinarySearchTree {
 		recursivePostOrderForEach(this.root, callback);
 	}
 
+
 	preOrderForEach(callback) {
 
 		function recursivePreOrderForEach(root, callback) {
@@ -225,6 +221,7 @@ export class BinarySearchTree {
 
 		recursivePreOrderForEach(this.root, callback);
 	}
+
 
 	height(value) {
 
@@ -258,6 +255,7 @@ export class BinarySearchTree {
 
 	}
 
+
 	depth(value) {
 
 		function recursiveDepth(root, value, depth) {
@@ -277,6 +275,7 @@ export class BinarySearchTree {
 
 		return recursiveDepth(this.root, value, 0);
 	}
+
 
 	isBalanced() {
 		//is every nodes subtrees balanced?
@@ -302,6 +301,7 @@ export class BinarySearchTree {
 		return checkHeight(this.root) !== -1;
 	}
 
+
 	reBalance() {
 
 		let sortedArray = [];
@@ -314,9 +314,8 @@ export class BinarySearchTree {
 		this.root = this.buildBST(sortedArray, 0, sortedArray.length - 1);
 
 		console.log("Tree has been Rebalanced");
-
-
 	}
+
 
 	prettyPrint(node, prefix = '', isLeft = true) {
 		if (node === null) {
