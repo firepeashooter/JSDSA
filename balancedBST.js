@@ -306,7 +306,7 @@ export class BinarySearchTree {
 
 		let sortedArray = [];
 
-		BST.inOrderForEach((node) => {
+		this.inOrderForEach((node) => {
 			sortedArray.push(node.value);
 		});
 
