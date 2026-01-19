@@ -5,11 +5,10 @@ class TreeNode {
 		this.value = value;
 		this.left = left;
 		this.right = right;
-
 	}
 }
 
-class BinarySearchTree {
+export class BinarySearchTree {
 
 	constructor(arr) {
 
@@ -62,17 +61,48 @@ class BinarySearchTree {
 	delete(value) {
 		function getSuccessor(root) {
 
+			//start in the right subtree and find the smallest node
+			let curNode = root.right;
+
+			while (curNode.left !== null) {
+				curNode = curNode.left;
+			}
+			return curNode;
 		}
 
 		function recursiveDelete(root, value) {
 
+			//Traverse the Tree to Find the value
+			if (root === null) {
+				return root;
+			}
+
+			if (value > root.value) {
+				root.right = recursiveDelete(root.right, value);
+			} else if (value < root.value) {
+				root.left = recursiveDelete(root.left, value);
+			} else {
+				//Delete the node
+				//with one or zero children
+				if (root.left === null) {
+					return root.right;
+				}
+				if (root.right === null) {
+					return root.left;
+				}
+
+				//with two children
+				const successor = getSuccessor(root);
+				root.value = successor.value;
+				root.right = recursiveDelete(root.right, successor);
+
+			}
+			return root;
 
 		}
 
 		recursiveDelete(this.root, value);
 	}
-
-
 
 	//Attempts to locate a node in a BST if found return the node else return null
 	find(value) {
@@ -95,6 +125,7 @@ class BinarySearchTree {
 
 		return recursiveFind(this.root, value);
 	}
+
 
 	levelOrderForEach(callback) {
 
@@ -120,13 +151,11 @@ class BinarySearchTree {
 			if (curNode.right) {
 				queue.push(curNode.right);
 			}
-
 			//do something with curNode
 			callback(curNode);
-
-
 		}
 	}
+
 
 	inOrderForEach(callback) {
 
@@ -149,6 +178,7 @@ class BinarySearchTree {
 		recursiveInOrderForEach(this.root, callback);
 	}
 
+
 	postOrderForEach(callback) {
 
 		function recursivePostOrderForEach(root, callback) {
@@ -169,6 +199,7 @@ class BinarySearchTree {
 
 		recursivePostOrderForEach(this.root, callback);
 	}
+
 
 	preOrderForEach(callback) {
 
@@ -191,6 +222,101 @@ class BinarySearchTree {
 		recursivePreOrderForEach(this.root, callback);
 	}
 
+
+	height(value) {
+
+		function recursiveHeight(root) {
+
+			if (root === null) {
+				return null;
+			}
+
+			//if the node is a leaf node it has a hieght of 0
+			if (root.left === null && root.right === null) {
+				return 0;
+			} else {
+				return 1 + Math.max(recursiveHeight(root.left), recursiveHeight(root.right));
+			}
+		}
+
+		//find the node we want to find the hieght of
+		let root = this.root;
+		while (root) {
+			if (value > root.value) {
+				root = root.right;
+			} else if (value < root.value) {
+				root = root.left;
+			} else if (value === root.value) {
+				console.log(root);
+				return recursiveHeight(root);
+			}
+		}
+		return null;
+
+	}
+
+
+	depth(value) {
+
+		function recursiveDepth(root, value, depth) {
+
+			if (root === null) {
+				return null;
+			}
+
+			if (value > root.value) {
+				return recursiveDepth(root.right, value, depth + 1);
+			} else if (value < root.value) {
+				return recursiveDepth(root.left, value, depth + 1);
+			} else if (value == root.value) {
+				return depth;
+			}
+		}
+
+		return recursiveDepth(this.root, value, 0);
+	}
+
+
+	isBalanced() {
+		//is every nodes subtrees balanced?
+		function checkHeight(root) {
+
+			if (root == null) {
+				return 0;
+			}
+
+			const leftHeight = checkHeight(root.left);
+			if (leftHeight === -1) return -1;
+
+			const rightHeight = checkHeight(root.right);
+			if (rightHeight === -1) return -1;
+
+			if (Math.abs(leftHeight - rightHeight) > 1) {
+				return -1;
+			}
+
+			return Math.max(leftHeight, rightHeight) + 1;
+		}
+
+		return checkHeight(this.root) !== -1;
+	}
+
+
+	reBalance() {
+
+		let sortedArray = [];
+
+		this.inOrderForEach((node) => {
+			sortedArray.push(node.value);
+		});
+
+
+		this.root = this.buildBST(sortedArray, 0, sortedArray.length - 1);
+
+		console.log("Tree has been Rebalanced");
+	}
+
+
 	prettyPrint(node, prefix = '', isLeft = true) {
 		if (node === null) {
 			return;
@@ -205,22 +331,6 @@ class BinarySearchTree {
 	}
 }
 
-
-let arr = [1, 2, 3, 4, 5];
-let BST = new BinarySearchTree(arr);
-BST.prettyPrint(BST.root);
-
-BST.insert(7);
-BST.insert(4);
-
-BST.prettyPrint(BST.root);
-
-//console.log("Finding 5: ");
-//console.log(BST.find(5));
-//console.log("Finding 6: ");
-//console.log(BST.find(6));
-
-BST.preOrderForEach((node) => { console.log(node) });
 
 
 
